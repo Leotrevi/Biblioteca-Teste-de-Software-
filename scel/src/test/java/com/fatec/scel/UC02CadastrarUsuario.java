@@ -27,11 +27,9 @@ public class UC02CadastrarUsuario {
 	public ExpectedException expectedException = ExpectedException.none();
 	private Usuario usuario;
 	
-	@Before
-	public void start() {
-		HashSet<PapelDoUsuario> papel = new HashSet<>();
+	
 		
-	}
+	
 	
 	@Test
 	public void testStoreUser() {
