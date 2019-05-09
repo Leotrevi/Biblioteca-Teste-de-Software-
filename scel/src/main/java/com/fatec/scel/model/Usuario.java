@@ -1,43 +1,59 @@
 package com.fatec.scel.model;
+
+import java.util.Set;
+import java.util.UUID;
+import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "Usuario")
 public class Usuario {
-	private String ra;
-	private String nome;
+	@Id
+	private UUID id;
+	@NotEmpty(message = "O email deve ser preeenchido")
+	private String email;
+	@Size(min = 1, max = 10, message = "Senha deve ter no maximo 4 caracteres")
+	private String password;
+	@ElementCollection(fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	private Set<PapelDoUsuario> papel;
 
-	public String getRa() {
-		return ra;
+	protected Usuario() {
 	}
 
-	public void setRa(String ra) {
-		this.ra = ra;
+	public Usuario(UUID id, String email, String password, Set<PapelDoUsuario> papel) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.papel = papel;
 	}
 
-	public String getNome() {
-		return nome;
+	public UUID getId() {
+		return id;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public String getEmail() {
+		return email;
+	}
+	
+
+	public String getPassword() {
+		return password;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (ra == null) {
-			if (other.ra != null)
-				return false;
-		} else if (!ra.equals(other.ra))
-			return false;
-		return true;
+	public Set<PapelDoUsuario> getPapel() {
+		return papel;
+	}
+
+	public String toString() {
+		return getEmail();
 	}
 }
